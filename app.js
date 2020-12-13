@@ -11,6 +11,11 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 // const Choice = require("inquirer/lib/objects/choice");
 
+const manager = new Manager;
+const engineer = new Engineer;
+const intern = new Intern;
+const htmlBlock = [];
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
@@ -74,11 +79,11 @@ const addMumber = [
 function promptUser() {
     inquirer.prompt(generalInfo)
         .then(function(data) {
-            if (data.role === "Manager") {
+            if (data.role === manager.getRole()) {
                 return inquirer.prompt(managerInfo);
-            } else if (data.role === "Engineer") {
+            } else if (data.role === engineer.getRole()) {
                 return inquirer.prompt(engineerInfo);
-            } else if (data.role === "Intern") {
+            } else if (data.role === intern.getRole()) {
                 return inquirer.prompt(internInfo);
             }
         }).then(addNewMember);
