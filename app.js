@@ -9,7 +9,7 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const Choice = require("inquirer/lib/objects/choice");
+// const Choice = require("inquirer/lib/objects/choice");
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -44,11 +44,6 @@ const managerInfo = [
         name: 'officeNimber',
         message: 'Please enter your office number:',
     },
-    {
-        type: 'confirm',
-        name: 'addMember',
-        message: 'Do you want to add another new member?',
-    },
 ];
 
 const engineerInfo = [
@@ -57,29 +52,57 @@ const engineerInfo = [
         name: 'github',
         message: 'Please enter your github username:',
     },
-    {
-        type: 'confirm',
-        name: 'addMember',
-        message: 'Do you want to add another new member?',
-    },
 ];
 
 const internInfo = [
     {
         type: 'input',
         name: 'school',
-        message: 'Please enter your :',
-    },
-    {
-        type: 'confirm',
-        name: 'addMember',
-        message: 'Do you want to add another new member?',
+        message: 'Please enter your school:',
     },
 ];
+
+const addMumber = [
+    {
+        type: 'list',
+        name: 'addMumber',
+        message: 'Do you want to add another new member?',
+        choices: ['Yes', 'No'],
+    },
+]
+
+function promptUser() {
+    inquirer.prompt(generalInfo)
+        .then(function(data) {
+            if (data.role === "Manager") {
+                return inquirer.prompt(managerInfo);
+            } else if (data.role === "Engineer") {
+                return inquirer.prompt(engineerInfo);
+            } else if (data.role === "Intern") {
+                return inquirer.prompt(internInfo);
+            }
+        }).then(addNewMember);
+}
+
+function addNewMember() {
+    inquirer.prompt(addMumber)
+        .then(function(data) {
+            if (data.addMumber === "Yes") {
+                promptUser();
+            } else if (data.addMumber === "No") {
+                console.log("Success!")
+            }
+        });
+}
+
+promptUser();
+    
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
