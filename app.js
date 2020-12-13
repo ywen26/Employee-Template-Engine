@@ -9,10 +9,73 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const Choice = require("inquirer/lib/objects/choice");
 
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+const generalInfo = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'Please enter the name of this mumber:',
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: 'Please enter the ID number of this member:',
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter the Email of this member:',
+    },
+    {
+        type: 'list',
+        name: 'role',
+        message: 'Please choose the role of this member:',
+        choices: ['Manager', 'Engineer', 'Intern'],
+    },
+];
+
+const managerInfo = [
+    {
+        type: 'input',
+        name: 'officeNimber',
+        message: 'Please enter your office number:',
+    },
+    {
+        type: 'confirm',
+        name: 'addMember',
+        message: 'Do you want to add another new member?',
+    },
+];
+
+const engineerInfo = [
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Please enter your github username:',
+    },
+    {
+        type: 'confirm',
+        name: 'addMember',
+        message: 'Do you want to add another new member?',
+    },
+];
+
+const internInfo = [
+    {
+        type: 'input',
+        name: 'school',
+        message: 'Please enter your :',
+    },
+    {
+        type: 'confirm',
+        name: 'addMember',
+        message: 'Do you want to add another new member?',
+    },
+];
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
