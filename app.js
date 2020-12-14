@@ -15,6 +15,7 @@ const render = require("./lib/htmlRenderer");
 // const engineer = new Engineer;
 // const intern = new Intern;
 const htmlBlock = [];
+const team = render(htmlBlock);
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -128,18 +129,13 @@ function addNewMember() {
             if (data.addMumber === "Yes") {
                 promptUser();
             } else if (data.addMumber === "No") {
+                fs.writeFileSync(outputPath, team);
                 console.log("Success!")
             }
         });
 }
 
-function init() {
-    promptUser();
-
-    const team = render(htmlBlock);
-}
-    
-init();
+promptUser();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
