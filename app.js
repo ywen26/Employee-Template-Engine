@@ -11,15 +11,24 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 // const Choice = require("inquirer/lib/objects/choice");
 
-const manager = new Manager;
-const engineer = new Engineer;
-const intern = new Intern;
+// const manager = new Manager;
+// const engineer = new Engineer;
+// const intern = new Intern;
 const htmlBlock = [];
 
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const generalInfo = [
+const roleInfo = [
+    {
+        type: 'list',
+        name: 'role',
+        message: 'Please choose the role of this member:',
+        choices: ['Manager', 'Engineer', 'Intern'],
+    },
+]
+
+const managerInfo = [
     {
         type: 'input',
         name: 'name',
@@ -36,22 +45,28 @@ const generalInfo = [
         message: 'Please enter the Email of this member:',
     },
     {
-        type: 'list',
-        name: 'role',
-        message: 'Please choose the role of this member:',
-        choices: ['Manager', 'Engineer', 'Intern'],
-    },
-];
-
-const managerInfo = [
-    {
         type: 'input',
-        name: 'officeNimber',
+        name: 'officeNumber',
         message: 'Please enter your office number:',
     },
 ];
 
 const engineerInfo = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'Please enter the name of this mumber:',
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: 'Please enter the ID number of this member:',
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter the Email of this member:',
+    },
     {
         type: 'input',
         name: 'github',
@@ -60,6 +75,21 @@ const engineerInfo = [
 ];
 
 const internInfo = [
+    {
+        type: 'input',
+        name: 'name',
+        message: 'Please enter the name of this mumber:',
+    },
+    {
+        type: 'input',
+        name: 'id',
+        message: 'Please enter the ID number of this member:',
+    },
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter the Email of this member:',
+    },
     {
         type: 'input',
         name: 'school',
@@ -77,14 +107,17 @@ const addMumber = [
 ]
 
 function promptUser() {
-    inquirer.prompt(generalInfo)
+    inquirer.prompt(roleInfo)
         .then(function(data) {
-            if (data.role === manager.getRole()) {
-                return inquirer.prompt(managerInfo);
-            } else if (data.role === engineer.getRole()) {
-                return inquirer.prompt(engineerInfo);
-            } else if (data.role === intern.getRole()) {
-                return inquirer.prompt(internInfo);
+            if (data.role === "Manager") {
+                return inquirer.prompt(managerInfo)
+                .then(htmlBlock.push(new Manager(data.name, data.id, data.email, data.officeNumber)));
+            } else if (data.role === "Engineer") {
+                return inquirer.prompt(engineerInfo)
+                .then(htmlBlock.push(new Engineer(data.name, data.id, data.email, data.github)));
+            } else if (data.role === "Intern") {
+                return inquirer.prompt(internInfo)
+                .then(htmlBlock.push(new Intern(data.name, data.id, data.email, data.school)));
             }
         }).then(addNewMember);
 }
@@ -100,9 +133,13 @@ function addNewMember() {
         });
 }
 
-promptUser();
-    
+function init() {
+    promptUser();
 
+    const team = render(htmlBlock);
+}
+    
+init();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
