@@ -19,106 +19,116 @@ const team = render(htmlBlock);
 
 
 // Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-const roleInfo = [
-    {
-        type: 'list',
-        name: 'role',
-        message: 'Please choose the role of this member:',
-        choices: ['Manager', 'Engineer', 'Intern'],
-    },
-]
+// and to create objects for each team member (using the correct classes as blueprints!
+const roleInfo = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'role',
+            message: 'Please choose the role of this member:',
+            choices: ['Manager', 'Engineer', 'Intern'],
+        },
+    ]);
+}
 
-const managerInfo = [
-    {
-        type: 'input',
-        name: 'name',
-        message: 'Please enter the name of this mumber:',
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: 'Please enter the ID number of this member:',
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Please enter the Email of this member:',
-    },
-    {
-        type: 'input',
-        name: 'officeNumber',
-        message: 'Please enter your office number:',
-    },
-];
+const managerInfo = () => { 
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Please enter the name of this mumber:',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the ID number of this member:',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Please enter the Email of this member:',
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: 'Please enter your office number:',
+        },
+    ]);
+}
 
-const engineerInfo = [
-    {
-        type: 'input',
-        name: 'name',
-        message: 'Please enter the name of this mumber:',
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: 'Please enter the ID number of this member:',
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Please enter the Email of this member:',
-    },
-    {
-        type: 'input',
-        name: 'github',
-        message: 'Please enter your github username:',
-    },
-];
+const engineerInfo = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Please enter the name of this mumber:',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the ID number of this member:',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Please enter the Email of this member:',
+        },
+        {
+            type: 'input',
+            name: 'github',
+            message: 'Please enter your github username:',
+        },
+    ]);
+}
 
-const internInfo = [
-    {
-        type: 'input',
-        name: 'name',
-        message: 'Please enter the name of this mumber:',
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: 'Please enter the ID number of this member:',
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'Please enter the Email of this member:',
-    },
-    {
-        type: 'input',
-        name: 'school',
-        message: 'Please enter your school:',
-    },
-];
+const internInfo = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Please enter the name of this mumber:',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the ID number of this member:',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Please enter the Email of this member:',
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: 'Please enter your school:',
+        },
+    ]);
+}
 
-const addMumber = [
-    {
-        type: 'list',
-        name: 'addMumber',
-        message: 'Do you want to add another new member?',
-        choices: ['Yes', 'No'],
-    },
-]
+const addMumber = () => {
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'addMumber',
+            message: 'Do you want to add another new member?',
+            choices: ['Yes', 'No'],
+        },
+    ]);
+}
 
-function promptUser() {
+async function promptUser() {
     inquirer.prompt(roleInfo)
         .then(function(data) {
             if (data.role === "Manager") {
-                return inquirer.prompt(managerInfo)
-                .then(htmlBlock.push(new Manager(data.name, data.id, data.email, data.officeNumber)));
+                inquirer.prompt(managerInfo);
+                htmlBlock.push(new Manager(answer.name, answer.id, answer.email, answer.officeNumber));
             } else if (data.role === "Engineer") {
                 return inquirer.prompt(engineerInfo)
-                .then(htmlBlock.push(new Engineer(data.name, data.id, data.email, data.github)));
+                .then((answer) => htmlBlock.push(new Engineer(answer.name, answer.id, answer.email, answer.github)));
             } else if (data.role === "Intern") {
                 return inquirer.prompt(internInfo)
-                .then(htmlBlock.push(new Intern(data.name, data.id, data.email, data.school)));
+                .then((answer) => htmlBlock.push(new Intern(answer.name, answer.id, answer.email, answer.school)));
             }
         }).then(addNewMember);
 }
