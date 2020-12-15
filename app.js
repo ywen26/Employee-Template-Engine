@@ -110,6 +110,7 @@ const addMember = () => {
 }
 
 async function promptUser() {
+    console.log("-----------------------");
     const roleType = await roleInfo();
     
     if (roleType.role === "Manager") {
@@ -133,10 +134,12 @@ async function addNewMember() {
     const newMember = await addMember();
 
     if (newMember.addMember === "Yes") {
+        console.log("-----------------------");
         promptUser();
     } else if (newMember.addMember === "No") {
         const team = render(htmlBlock);
         fs.writeFileSync(outputPath, team);
+        console.log("-----------------------");
         console.log("Team summary is generated successfully!")
     }
 }
