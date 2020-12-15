@@ -28,7 +28,7 @@ const managerInfo = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'Please enter the name of this mumber:',
+            message: 'Please enter the name of this member:',
         },
         {
             type: 'input',
@@ -53,7 +53,7 @@ const engineerInfo = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'Please enter the name of this mumber:',
+            message: 'Please enter the name of this member:',
         },
         {
             type: 'input',
@@ -78,7 +78,7 @@ const internInfo = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'Please enter the name of this mumber:',
+            message: 'Please enter the name of this member:',
         },
         {
             type: 'input',
