@@ -12,6 +12,7 @@ const render = require("./lib/htmlRenderer");
 
 const htmlBlock = [];
 
+// Prompt question to select a team role
 const roleInfo = () => {
     return inquirer.prompt([
         {
@@ -23,6 +24,7 @@ const roleInfo = () => {
     ]);
 }
 
+// Prompt questions for inputting manager information
 const managerInfo = () => { 
     return inquirer.prompt([
         {
@@ -48,6 +50,7 @@ const managerInfo = () => {
     ]);
 }
 
+// Prompt questions for inputting engineer information
 const engineerInfo = () => {
     return inquirer.prompt([
         {
@@ -73,6 +76,7 @@ const engineerInfo = () => {
     ]);
 }
 
+// Prompt questions for inputting intern information
 const internInfo = () => {
     return inquirer.prompt([
         {
@@ -98,6 +102,7 @@ const internInfo = () => {
     ]);
 }
 
+// Prompt question to add member or end up
 const addMember = () => {
     return inquirer.prompt([
         {
@@ -109,6 +114,7 @@ const addMember = () => {
     ]);
 }
 
+// Create a function to set up question order and create html block of each member
 async function promptUser() {
     console.log("-----------------------");
     const roleType = await roleInfo();
@@ -130,6 +136,7 @@ async function promptUser() {
     addNewMember();
 }
 
+// Create a function to add new member or end up to write the team html file
 async function addNewMember() {
     const newMember = await addMember();
 
@@ -144,4 +151,5 @@ async function addNewMember() {
     }
 }
 
+// Call to run the promptUser function
 promptUser();
